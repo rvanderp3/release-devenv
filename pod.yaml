@@ -1,0 +1,107 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: e2e-workflow-runner
+spec:
+  initContainers:
+  - name: init-env
+    image: quay.io/<your-repo>/release-test:ci-runner
+    imagePullPolicy: Always
+    args:
+    - mkdir
+    - /logs/artifacts
+    volumeMounts:
+    - mountPath: /logs
+      name: logs
+  containers:
+  - name: ubi8
+    image: quay.io/<your-repo>/release-test:ci-runner
+    imagePullPolicy: Always
+    args:
+    - sleep
+    - "1000000"
+    env:
+    - name: BUILD_ID
+      value: "1466152557582749696"
+    - name: CI
+      value: "true"
+    - name: JOB_NAME
+      value: periodic-ci-openshift-release-master-nightly-4.10-e2e-vsphere-techpreview-serial
+    - name: JOB_SPEC
+      value: ''
+    - name: JOB_TYPE
+      value: local
+    - name: OPENSHIFT_CI
+      value: "true"
+    - name: PROW_JOB_ID
+      value: local-dev-job
+    - name: ENTRYPOINT_OPTIONS
+      value: ''
+    - name: ARTIFACT_DIR
+      value: /logs/artifacts
+    - name: NAMESPACE
+      value: ci-op-0jx4x7qc
+    - name: JOB_NAME_SAFE
+      value: openshift-e2e-vsphere-serial
+    - name: JOB_NAME_HASH
+      value: 1656b
+    - name: LEASED_RESOURCE
+      value: ci-segment-98
+    - name: RELEASE_IMAGE_LATEST
+      value: registry.ci.openshift.org/ocp/release:xyz
+    - name: IMAGE_FORMAT
+    - name: FIPS_ENABLED
+      value: "false"
+    - name: KUBECONFIG
+      value: /var/run/secrets/ci.openshift.io/multi-stage/kubeconfig
+    - name: KUBEADMIN_PASSWORD_FILE
+      value: /var/run/secrets/ci.openshift.io/multi-stage/kubeadmin-password
+    - name: CLUSTER_TYPE
+      value: vsphere
+    - name: CLUSTER_PROFILE_DIR
+      value: /var/run/secrets/ci.openshift.io/cluster-profile
+    - name: SHARED_DIR
+      value: /var/run/secrets/ci.openshift.io/multi-stage
+    - name: PIP_USER
+      value: "false"
+    - name: OPENSHIFT_INSTALL_RELEASE_IMAGE_OVERRIDE
+      vaule: quay.io/openshift-release-dev/ocp-release@sha256:c91c0faf7ae3c480724a935b3dab7e5f49aae19d195b12f3a4ae38f8440ea96b
+    volumeMounts:
+    - mountPath: /tools
+      name: tools
+    - mountPath: /logs
+      name: logs
+    - mountPath: /var/run/secrets/ci.openshift.io/cluster-profile
+      name: cluster-profile
+    - mountPath: /var/run/secrets/ci.openshift.io/multi-stage
+      name: shared-dir
+    - mountPath: /var/run/vault/ibmcloud
+      name: ibm-cloud-vmware-creds
+    - mountPath: /var/run/vault/vsphere
+      name: route53-creds    
+  volumes:
+  - emptyDir: {}
+    name: logs
+  - emptyDir: {}
+    name: shared-dir
+  - emptyDir: {}
+    name: tools
+  - name: cluster-profile
+    secret:
+      defaultMode: 420
+      secretName: cluster-profile
+  - name: ibm-cloud-vmware-creds
+    secret:
+      defaultMode: 420
+      secretName: ibm-cloud-vmware-creds
+  - name: route53-creds
+    secret:
+      defaultMode: 420
+      secretName: route53-creds
+
+
+
+
+
+
+  
