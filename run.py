@@ -41,7 +41,8 @@ def processRef(ref):
                 if job in ref["as"]:
                     print("skipping ref")
                     return 0
-            return subprocess.run(["bash" , shPath])
+            subprocess.run(["bash" , shPath])
+            return 0
         except yaml.YAMLError as exc:
             print(exc)
     return 1
@@ -62,10 +63,10 @@ def processChain(chain):
             steps = chain["steps"]
             for step in steps:
                 if "ref" in step:                    
-                    return processRef(step["ref"])                   
+                    processRef(step["ref"])                   
                 if "chain" in step:
                     print("chain:["+chain["as"]+"]-->")
-                    return processChain(step["chain"])
+                    processChain(step["chain"])
                     
         except yaml.YAMLError as exc:
             print(exc)
