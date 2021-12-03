@@ -65,7 +65,7 @@ spec:
     - name: PIP_USER
       value: "false"
     - name: OPENSHIFT_INSTALL_RELEASE_IMAGE_OVERRIDE
-      vaule: quay.io/openshift-release-dev/ocp-release@sha256:c91c0faf7ae3c480724a935b3dab7e5f49aae19d195b12f3a4ae38f8440ea96b
+      value: quay.io/openshift-release-dev/ocp-release@sha256:c91c0faf7ae3c480724a935b3dab7e5f49aae19d195b12f3a4ae38f8440ea96b
     volumeMounts:
     - mountPath: /tools
       name: tools
