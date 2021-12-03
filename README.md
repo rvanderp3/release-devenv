@@ -1,6 +1,6 @@
 # Overview
 
-Verifying the functionality of PRs in the `release` repo is timely and expensive(from both a developer and cloud cost) perspective. The intent of this project is to provide a development environment where changes to the `release` repo can be verified locally while still working with real cloud backends.  This environment is not intended to replace verifying a PR via `pj-rehearse`.  It is solely intended to allow faster iteration of changes and
+Verifying the functionality of PRs in the `release` repo can be a bit challenging due to the large number of steps and/or jobs that are run when a PR is tested. The intent of this project is to provide a development environment where changes to the `release` repo can be verified locally while still working with real cloud backends.  This environment is not intended to replace verifying a PR via `pj-rehearse`.  It is solely intended to allow faster iteration of changes and
 allow mocking of configurations that are not readily possible with `pj-rehearse` today.  For example, I need to run job `x` against version `y`.  This environment is presently skewed towards development of periodics.
 
 This project is not a 'turn-key' solution. You must be knowledgable, to an extent, on how the `release` repo runs workflows. 
